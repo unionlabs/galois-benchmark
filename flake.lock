@@ -5957,17 +5957,16 @@
       "locked": {
         "lastModified": 1687469514,
         "narHash": "sha256-d+FW6jWzD9PQwmdawOCrht7l9Of6jme+OrRBzvfBANQ=",
-        "ref": "main",
+        "owner": "unionlabs",
+        "repo": "union",
         "rev": "c187182f4db02ee083e37ac5203f1b3e4bc50732",
-        "revCount": 921,
-        "type": "git",
-        "url": "ssh://git@github.com/unionfi/union"
+        "type": "github"
       },
       "original": {
-        "ref": "main",
+        "owner": "unionlabs",
+        "repo": "union",
         "rev": "c187182f4db02ee083e37ac5203f1b3e4bc50732",
-        "type": "git",
-        "url": "ssh://git@github.com/unionfi/union"
+        "type": "github"
       }
     },
     "v0.0.2": {

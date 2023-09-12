@@ -3,7 +3,7 @@
 
   inputs = {
     union.url =
-      "git+ssh://git@github.com/unionfi/union?ref=main&rev=c187182f4db02ee083e37ac5203f1b3e4bc50732";
+      "github:unionlabs/union/c187182f4db02ee083e37ac5203f1b3e4bc50732";
     flake-utils.url = "github:numtide/flake-utils";
   };
 

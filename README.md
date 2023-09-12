@@ -12,5 +12,6 @@ The suite is sequentially benchmarking the circuit for 4, 8, 16, 32, 64, 128 max
 
 [Nix package manager](https://nixos.org) is required.
 
-Re-generating the benchmark: `nix --extra-experimental-features nix-command --extra-experimental-features flakes run .#benchmark -- --output $(pwd)/report.html`
+You need to have a [GitHub PAT available to run the command](https://github.com/unionlabs/union/wiki/Personal-Access-Token-%28PAT%29-Setup).
+To re-generate this benchmark, you don't have to clone the repo, but simply run the following command: `nix --extra-experimental-features nix-command --extra-experimental-features flakes run github:unionlabs/galois-benchmark#benchmark -L --option access-tokens github.com=<YOUR_GITHUB_PAT> -- --output $(pwd)/report.html`
 
