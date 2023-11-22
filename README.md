@@ -6,6 +6,7 @@ The suite is sequentially benchmarking the circuit for 4, 8, 16, 32, 64, 128 max
 
 ## Available benchmarks
 
+- [c6i.x32large (Old version)](./c6i.x32large.deprecated)
 - [c6i.x32large](./c6i.x32large)
 
 ## Getting started
