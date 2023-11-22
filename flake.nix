@@ -17,7 +17,7 @@
               mkdir -p $out
               cp -r ${old.src}/* $out/
               substituteInPlace $out/pkg/lightclient/common.go \
-              --replace "const MaxVal = 16" "const MaxVal = ${
+              --replace "const MaxVal = 128" "const MaxVal = ${
                 builtins.toString maxVal
               }"
             '';
