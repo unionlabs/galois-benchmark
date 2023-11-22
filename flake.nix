@@ -3,7 +3,7 @@
 
   inputs = {
     union.url =
-      "github:unionlabs/union/c187182f4db02ee083e37ac5203f1b3e4bc50732";
+      "github:unionlabs/union/4a2c4151af175422815a8d2b8089cd64568cc958";
     flake-utils.url = "github:numtide/flake-utils";
   };
 
@@ -11,8 +11,8 @@
     flake-utils.lib.eachDefaultSystem (system:
       let
         pkgs = nixpkgs.legacyPackages.${system};
-        mkGalois = { maxVal }:
-          union.packages.${system}.unionpd.overrideAttrs (old: {
+        mkGaloisd = { maxVal }:
+          union.packages.${system}.galoisd.overrideAttrs (old: {
             src = pkgs.runCommand "src-patched" { } ''
               mkdir -p $out
               cp -r ${old.src}/* $out/
@@ -25,7 +25,7 @@
       in {
         packages = {
           benchmark =
-            let galois-universal = mkGalois { maxVal = 4; };
+            let galois-universal = mkGaloisd { maxVal = 16; };
                 valset = [ 4 8 16 32 64 128 ];
           in pkgs.writeScriptBin "galois-benchmark" ''
             #!/usr/bin/env nix-shell
@@ -94,24 +94,11 @@
             instance FromJSON VerifyingKeyStats where
                parseJSON = genericParseJSON $ aesonPrefix snakeCase
 
-            data CommitmentStats =
-              CommitmentStats {
-                commitmentNbPrivateCommitted :: Int
-              }
-              deriving (Show, Generic)
-
-            instance ToJSON CommitmentStats where
-               toJSON = genericToJSON $ aesonPrefix snakeCase
-
-            instance FromJSON CommitmentStats where
-               parseJSON = genericParseJSON $ aesonPrefix snakeCase
-
             data CircuitStats =
               CircuitStats {
                 circuitVariableStats :: VariableStats,
                 circuitProvingKeyStats :: ProvingKeyStats,
-                circuitVerifyingKeyStats :: VerifyingKeyStats,
-                circuitCommitmentStats :: CommitmentStats
+                circuitVerifyingKeyStats :: VerifyingKeyStats
               }
               deriving (Show, Generic)
 
@@ -177,7 +164,7 @@
                 _ -> error "should be able to query"
 
             ${builtins.concatStringsSep "\n" (builtins.map (maxVal:
-              let galois = pkgs.lib.getExe (mkGalois { inherit maxVal; });
+              let galois = pkgs.lib.getExe (mkGaloisd { inherit maxVal; });
               in ''
                 serve${builtins.toString maxVal} allStats tmpdir = do
                   pkExists <- testpath "pk.bin"
@@ -201,7 +188,7 @@
                   pure threadId
 
                 prove${builtins.toString maxVal} =
-                  stdout $ inproc "${galois}" ["example-prove", "localhost:8080"] empty
+                  stdout $ inproc "${galois}" ["example-prove", "localhost:8080", "${builtins.toString maxVal}"] empty
               '') valset)}
 
             main = do
