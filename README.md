@@ -19,4 +19,3 @@ Reference (c6i.x32large) specs:
 1. Install nix: `sh <(curl -L https://nixos.org/nix/install) --daemon`.
 2. Generate a [GitHub PAT to run the command](https://github.com/unionlabs/union/wiki/Personal-Access-Token-%28PAT%29-Setup). **The PAT must have read-only access to both** `unionlabs/union` and `unionlabs/galois-benchmark`.
 3. Run the following command: `nix --extra-experimental-features nix-command --extra-experimental-features flakes run github:unionlabs/galois-benchmark#benchmark -L --option access-tokens github.com=<YOUR_GITHUB_PAT> -- --output $(pwd)/report.html`
-
