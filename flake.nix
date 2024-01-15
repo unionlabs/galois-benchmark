@@ -12,7 +12,16 @@
       let
         pkgs = nixpkgs.legacyPackages.${system};
         mkGaloisd = { maxVal }:
-          union.packages.${system}.galoisd;
+          union.packages.${system}.galoisd.overrideAttrs (old: {
+            src = pkgs.runCommand "src-patched" { } ''
+              mkdir -p $out
+              cp -r ${old.src}/* $out/
+              substituteInPlace $out/pkg/lightclient/common.go \
+              --replace "const MaxVal = 128" "const MaxVal = ${
+                builtins.toString maxVal
+              }"
+            '';
+          });
       in {
         packages = {
           benchmark =
