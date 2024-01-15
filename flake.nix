@@ -3,7 +3,7 @@
 
   inputs = {
     union.url =
-      "github:unionlabs/union/4a2c4151af175422815a8d2b8089cd64568cc958";
+      "github:unionlabs/union/6a2dcde5092b7169459526b29b15bf9ae942df39";
     flake-utils.url = "github:numtide/flake-utils";
   };
 
@@ -12,16 +12,7 @@
       let
         pkgs = nixpkgs.legacyPackages.${system};
         mkGaloisd = { maxVal }:
-          union.packages.${system}.galoisd.overrideAttrs (old: {
-            src = pkgs.runCommand "src-patched" { } ''
-              mkdir -p $out
-              cp -r ${old.src}/* $out/
-              substituteInPlace $out/pkg/lightclient/common.go \
-              --replace "const MaxVal = 128" "const MaxVal = ${
-                builtins.toString maxVal
-              }"
-            '';
-          });
+          union.packages.${system}.galoisd;
       in {
         packages = {
           benchmark =
